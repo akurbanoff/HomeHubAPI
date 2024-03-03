@@ -16,9 +16,9 @@ fun main() {
     val driverClassName = "org.postgresql.Driver"
     val jdbcURL = "jdbc:postgresql://db/${dotenv["DB_NAME"]}"
     val dbConnection = Database.connect(url = jdbcURL, driver = driverClassName, password = dotenv["DB_PASS"], user = dotenv["DB_USER"])
-//    transaction(dbConnection) {
-//        SchemaUtils.create(Client.table, Achieve.table, Employee.table, Object.table, Dealing.table, Company, ClientDescription.table)
-//    }
+    transaction(dbConnection) {
+        SchemaUtils.create(Clients, Achieves, Employees, Objects, Dealings, Company, ClientDescriptions)
+    }
     embeddedServer(Netty, port = 8080, host = "127.0.0.1", module = Application::module)
         .start(wait = true)
 }
