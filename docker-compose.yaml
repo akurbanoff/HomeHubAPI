@@ -3,36 +3,42 @@ services:
   server:
     build: .
     ports:
-      - "8080:8080"
+      - "${SERVER_PORT}:${SERVER_PORT}"
     env_file:
       - .env
     environment:
       - SERVER_PORT=$SERVER_PORT
       - POSTGRES_USER=$DB_USER
       - POSTGRES_PASSWORD=$DB_PASSWORD
-    depends_on:
-      - db
-    networks:
-      - db_network
+#    depends_on:
+#      db:
+#        condition: service_healthy
+#    networks:
+#      - db_network
     restart: always
+    working_dir: /app
+    network_mode: bridge
 
-  db:
-    image: postgres:latest
-    ports:
-      - "5433:5433"
-    env_file:
-      - .env
-    environment:
-      POSTGRES_DB: $DB_NAME
-      POSTGRES_USER: $DB_USER
-      POSTGRES_PASSWORD: $DB_PASS
-    volumes:
-      - ./db-data:/var/lib/postgresql/data
-      #- ./sql/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
-    networks:
-      - db_network
-    restart: always
+#  db:
+#    image: postgres:latest
+#    ports:
+#      - "5433:5432"
+#    env_file:
+#      - .env
+#    environment:
+#      POSTGRES_DB: $DB_NAME
+#      POSTGRES_USER: $DB_USER
+#      POSTGRES_PASSWORD: $DB_PASS
+#    volumes:
+#      - ./db-data:/var/lib/postgresql/data
+#      #- ./sql/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+##    networks:
+##      - db_network
+#    restart: always
+#    healthcheck:
+#      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+#      interval: 1s
 
-networks:
-  db_network:
-    driver: bridge
+#networks:
+#  db_network:
+#    driver: bridge

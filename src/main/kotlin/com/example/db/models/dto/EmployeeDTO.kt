@@ -14,7 +14,7 @@ data class EmployeeDTO(
 data class EmployeeResult(
     val execution_time: Double,
     val limit: Int,
-    val list: ArrayList<EmployeeSerializable>,
+    val list: List<EmployeeSerializable>,
     val order_by: String,
     val order_dir: String,
     val page: Int,

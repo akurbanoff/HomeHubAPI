@@ -9,7 +9,7 @@ class Repository {
     val dao = EmployeeDAO()
     val api = ApiParser()
 
-    fun getEmployees(): ArrayList<EmployeeSerializable>{
+    fun getEmployees(): List<EmployeeSerializable>{
         val newEmployees = api.updateEmployees()
         //dao.addEmployees(newEmployees)
         return newEmployees

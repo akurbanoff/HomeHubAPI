@@ -22,19 +22,15 @@ class ApiParser{
     val client = OkHttpClient()
     val url = "https://faber.yucrm.ru/api/v1/$GET_POST_API_KEY/"
 
-    fun updateEmployees(): ArrayList<EmployeeSerializable>{
+    fun updateEmployees(): List<EmployeeSerializable>{
         val request = Request.Builder().url(url + "employees/list").build()
         client.newCall(request).execute().use {response ->
             if(!response.isSuccessful){
                 throw IOException("Сервер не отвечает либо api_key устарел")
             }
             val json = Json.decodeFromString<EmployeeDTO>(response.body!!.string())
-            for(employee in json.result.list){
-                if(!employee.is_active){
-                    json.result.list.remove(employee)
-                }
-            }
-            return json.result.list
+            val employees = json.result.list.filter { it.is_active }
+            return employees
         }
     }
     fun getDealings(): ArrayList<Dealing> {
