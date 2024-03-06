@@ -15,7 +15,7 @@ class Repository {
         return newEmployees
     }
 
-    fun getDealings(): ArrayList<Dealing>{
+    fun getDealings(): List<Dealing>{
         val dealings = api.getDealings()
         return dealings
     }

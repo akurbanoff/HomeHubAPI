@@ -55,11 +55,11 @@ data class Direction(
 
 @Serializable
 data class Manager(
+    val id: Int,
+    val phone: String,
     val email: String,
     val first_name: String,
-    val id: Int,
     val last_name: String,
-    val phone: String
 )
 
 @Serializable

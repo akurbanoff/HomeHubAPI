@@ -9,6 +9,8 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import kotlin.io.use
 
 enum class Stages(val title: String){
@@ -33,17 +35,19 @@ class ApiParser{
             return employees
         }
     }
-    fun getDealings(): ArrayList<Dealing> {
-        val request = Request.Builder().url(url + "clients/list").build()
+    fun getDealings(): List<Dealing> {
+        var page = 1
+        val pages = 1
+        val request = Request.Builder().url(url + "clients/list?limit=1000&page=$page")
+            .build()
         client.newCall(request).execute().use {response ->
             val json = Json.decodeFromString<DealingDTO>(response.body!!.string())
-            val dealings = json.result.list
-            for(deal in json.result.list){
-                if(deal.stage.name != Stages.OBJECT_SOLD.title || deal.stage.name != Stages.CLIENT_BOUGHT.title){
-                    dealings.remove(deal)
-                }
+            val dealings = json.result.list.filter { it.stage?.name == Stages.OBJECT_SOLD.title || it.stage?.name == Stages.CLIENT_BOUGHT.title }
+            return if(dealings.isEmpty()){
+                emptyList()
+            } else {
+                dealings
             }
-            return dealings
         }
     }
 
