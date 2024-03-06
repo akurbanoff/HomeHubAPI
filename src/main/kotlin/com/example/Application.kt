@@ -19,7 +19,7 @@ fun main() {
 //    transaction(dbConnection) {
 //        SchemaUtils.create(Clients, Achieves, Employees, Objects, Dealings, Company, ClientDescriptions)
 //    }
-    embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module)
+    embeddedServer(Netty, port = dotenv["SERVER_PORT"].toInt(), module = Application::module)//host = "0.0.0.0"
         .start(wait = true)
 }
 
