@@ -15,7 +15,18 @@ fun main() {
     val dotenv = dotenv()
     val driverClassName = "org.postgresql.Driver"
 
-    val jdbcURL = "jdbc:postgresql:${dotenv["DB_NAME"]}?port=${dotenv["DB_PORT"]}"
+    val debug = false
+
+    val db_host = if(debug){
+        "172.17.0.1"
+    } else {
+        "45.130.42.144"
+    }
+
+    val jdbcURL = if(debug)
+        "jdbc:postgresql:${dotenv["DB_NAME"]}?port=${dotenv["DB_PORT"]}"
+    else
+        "jdbc:postgresql://${db_host}:${dotenv["DB_PORT"]}/${dotenv["DB_NAME"]}"
 
     val dbConnection = Database.connect(
         url = jdbcURL,
@@ -30,7 +41,7 @@ fun main() {
         Netty,
         port = dotenv["SERVER_PORT"].toInt(),
         module = Application::module,
-        host = if(dotenv["DEBUG"] == "false") "45.130.42.144" else "0.0.0.0"
+        host = if(debug) "45.130.42.144" else "0.0.0.0"
     )//host = "0.0.0.0"
         .start(wait = true)
 }
