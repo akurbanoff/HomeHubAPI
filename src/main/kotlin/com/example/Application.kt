@@ -24,7 +24,12 @@ fun main() {
     transaction(dbConnection) {
         SchemaUtils.create(Clients, Achieves, Employees, Objects, Dealings, Company, ClientDescriptions)
     }
-    embeddedServer(Netty, port = dotenv["SERVER_PORT"].toInt(), module = Application::module)//host = "0.0.0.0"
+    embeddedServer(
+        Netty,
+        port = dotenv["SERVER_PORT"].toInt(),
+        module = Application::module,
+        host = if(dotenv["DEBUG"] == "false") "45.130.42.144" else "0.0.0.0"
+    )//host = "0.0.0.0"
         .start(wait = true)
 }
 
