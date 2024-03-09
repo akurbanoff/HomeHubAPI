@@ -6,11 +6,11 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 
 object ClientDescriptions: IntIdTable() {
-    val descriptionId = reference("descriptionId", Clients)
+    val descriptionId = reference("descriptionId", Clients.id)
 }
 
-class ClientDescription(id: EntityID<Int>): IntEntity(id){
-    companion object : IntEntityClass<ClientDescription>(ClientDescriptions)
-
-    val declarationId by Client referrersOn ClientDescriptions.descriptionId
-}
+//class ClientDescription(id: EntityID<Int>): IntEntity(id){
+//    companion object : IntEntityClass<ClientDescription>(ClientDescriptions)
+//
+//    val declarationId by Clients referrersOn ClientDescriptions.descriptionId
+//}

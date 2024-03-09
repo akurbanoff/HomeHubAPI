@@ -9,11 +9,11 @@ object Achieves: IntIdTable("achieves"){
     val description = varchar("description", 50)
     val hubcoinRevard = integer("hubcoinRevard")
     val expirienceRevard = integer("expirienceRevard")
-    val employeeId = reference("employeeId", Employees)
+    val employeeId = reference("employeeId", Employees.id)
 }
 
-class Achieve(id: EntityID<Int>): IntEntity(id) {
-    companion object : IntEntityClass<Achieve>(Achieves)
-
-    val employeeId by Employee referrersOn Achieves.employeeId
-}
+//class Achieve(id: EntityID<Int>): IntEntity(id) {
+//    companion object : IntEntityClass<Achieve>(Achieves)
+//
+//    val employeeId by Employee referrersOn Achieves.employeeId
+//}

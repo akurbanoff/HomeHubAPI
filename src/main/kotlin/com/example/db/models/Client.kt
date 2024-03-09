@@ -58,12 +58,12 @@ object Clients: IntIdTable("clients") {
     val name = varchar("name", 100).nullable()
     val email = varchar("email", 50).nullable()
     val region = varchar("region", 100)
-    val employeeId = reference("employeeId", Employees)
+    val employeeId = reference("employeeId", Employees.id)
 }
 
-class Client(id: EntityID<Int>): IntEntity(id){
-    companion object : IntEntityClass<Client>(Clients)
-
-    var createdAt by Clients.created_at
-    val employeeId by Employee referrersOn Clients.employeeId
-}
+//class Client(id: EntityID<Int>): IntEntity(id){
+//    companion object : IntEntityClass<Client>(Clients)
+//
+//    var createdAt by Clients.created_at
+//    val employeeId by Employee referrersOn Clients.employeeId
+//}

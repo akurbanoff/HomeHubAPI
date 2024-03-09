@@ -27,7 +27,7 @@ class ApiParser{
     val client = OkHttpClient()
     val url = "https://faber.yucrm.ru/api/v1/$GET_POST_API_KEY/"
 
-    fun updateEmployees(): EmployeeResponse{
+    fun getEmployees(): EmployeeResponse{
         val request = Request.Builder().url(url + "employees/list").build()
         client.newCall(request).execute().use {response ->
             if(!response.isSuccessful){

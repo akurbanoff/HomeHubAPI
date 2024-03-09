@@ -13,19 +13,24 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 fun main() {
     val dotenv = dotenv()
-//    val driverClassName = "org.postgresql.Driver"
-//    val jdbcURL = "jdbc:postgresql://db:${dotenv["DB_PORT"]}/${dotenv["DB_NAME"]}"
-//    val dbConnection = Database.connect(url = jdbcURL, driver = driverClassName, password = dotenv["DB_PASS"], user = dotenv["DB_USER"])
-//    transaction(dbConnection) {
-//        SchemaUtils.create(Clients, Achieves, Employees, Objects, Dealings, Company, ClientDescriptions)
-//    }
+    val driverClassName = "org.postgresql.Driver"
+    val jdbcURL = "jdbc:postgresql:${dotenv["DB_NAME"]}?port=${dotenv["DB_PORT"]}"
+    val dbConnection = Database.connect(
+        url = jdbcURL,
+        driver = driverClassName,
+        password = dotenv["DB_PASS"],
+        user = dotenv["DB_USER"]
+    )
+    transaction(dbConnection) {
+        SchemaUtils.create(Clients, Achieves, Employees, Objects, Dealings, Company, ClientDescriptions)
+    }
     embeddedServer(Netty, port = dotenv["SERVER_PORT"].toInt(), module = Application::module)//host = "0.0.0.0"
         .start(wait = true)
 }
 
 fun Application.module() {
     //configureDatabase()
-    configureSecurity()
+    //configureSecurity()
     configureSerialization()
     configureHTTP()
     configureRouting()

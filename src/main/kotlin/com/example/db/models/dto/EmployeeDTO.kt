@@ -1,6 +1,7 @@
 package com.example.db.models.dto
 
 import com.example.db.models.Employees
+import com.example.db.models.Employees.id
 import kotlinx.serialization.Serializable
 import org.jetbrains.exposed.sql.ResultRow
 
@@ -65,24 +66,24 @@ data class Supervisor(
 
 fun mapToEmployeeDTO(it: ResultRow): EmployeeSerializable{
     return EmployeeSerializable(
-        id = it[Employees.id].value,
         created_at = it[Employees.createdAt],
-        office = Office(it[Employees.officeId], it[Employees.officeName]),
         department = Department(it[Employees.departmentId], it[Employees.departmentName]),
-        is_active = it[Employees.isActive],
-        first_name = it[Employees.name],
-        middle_name = it[Employees.name],
-        last_name = it[Employees.name],
-        phone = it[Employees.mainPhoneNumber],
-        second_phone = it[Employees.secondPhoneNumber],
         email = it[Employees.email],
-        position = it[Employees.position],
-        supervisor = Supervisor(it[Employees.supervisorId], it[Employees.supervisorName]),
-        role = Role(it[Employees.roleId], it[Employees.roleName]),
+        first_name = it[Employees.firstName],
+        id = it[Employees.id],
+        is_active = it[Employees.isActive],
+        last_name = it[Employees.lastName],
+        last_visit_at = it[Employees.lastVisitAt],
+        local_phone = it[Employees.localPhone],
+        middle_name = it[Employees.middleName],
+        office = Office(it[Employees.officeId], it[Employees.officeName]),
+        phone = it[Employees.phone],
         photos = listOf(it[Employees.photo]),
-        local_phone = "",
-        updated_at = "",
-        last_visit_at = "",
-        show_on_site = false
+        position = it[Employees.position],
+        role = Role(it[Employees.roleId], it[Employees.roleName]),
+        second_phone = it[Employees.secondPhone],
+        show_on_site = it[Employees.showOnSite],
+        supervisor = Supervisor(it[Employees.supervisorId], it[Employees.supervisorName]),
+        updated_at = it[Employees.updatedAt],
     )
 }

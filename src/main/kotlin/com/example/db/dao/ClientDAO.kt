@@ -1,6 +1,5 @@
 package com.example.db.dao
 
-import com.example.db.models.Client
 import com.example.db.models.Clients
 import com.example.db.models.dto.ClientDTO
 import org.jetbrains.exposed.sql.insert

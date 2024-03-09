@@ -75,11 +75,11 @@ enum class Stages(val title: String){
 }
 
 object Dealings: IntIdTable() {
-    val employeeId = reference("employeeId", Employees)
+    val employeeId = reference("employeeId", Employees.id)
 }
 
-class Dealing(id: EntityID<Int>): IntEntity(id){
-    companion object : IntEntityClass<Dealing>(Dealings)
-
-    val employeeId by Employee referrersOn Dealings.employeeId
-}
+//class Dealing(id: EntityID<Int>): IntEntity(id){
+//    companion object : IntEntityClass<Dealing>(Dealings)
+//
+//    val employeeId by Employee referrersOn Dealings.employeeId
+//}
