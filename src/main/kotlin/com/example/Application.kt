@@ -14,7 +14,9 @@ import org.jetbrains.exposed.sql.transactions.transaction
 fun main() {
     val dotenv = dotenv()
     val driverClassName = "org.postgresql.Driver"
-    val jdbcURL = if(dotenv["DEBUG"] == "false") "jdbc:postgresql://db:${dotenv["DB_PORT"]}/${dotenv["DB_NAME"]}" else "jdbc:postgresql:${dotenv["DB_NAME"]}?port=${dotenv["DB_PORT"]}"
+
+    val jdbcURL = "jdbc:postgresql:${dotenv["DB_NAME"]}?port=${dotenv["DB_PORT"]}"
+
     val dbConnection = Database.connect(
         url = jdbcURL,
         driver = driverClassName,

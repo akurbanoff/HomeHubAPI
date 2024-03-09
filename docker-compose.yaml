@@ -32,8 +32,7 @@ services:
     volumes:
       - ./db-data:/var/lib/postgresql/data
       #- ./sql/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
-#    networks:
-#      - db_network
+    network_mode: bridge
     restart: always
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
