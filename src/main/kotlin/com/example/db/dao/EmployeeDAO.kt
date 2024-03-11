@@ -18,8 +18,12 @@ class EmployeeDAO {
     }
     fun addEmployees(employees: List<EmployeeSerializable>) = transaction{
         val employeesList = getEmployees()
+        val indexList = mutableListOf<Int>()
+        employeesList.forEach { db_employee ->
+            indexList.add(db_employee.id)
+        }
         employees.forEach { employee ->
-            if(!employeesList.contains(employee)) Employees.insert(employee)
+            if(!indexList.contains(employee.id)) Employees.insert(employee)
         }
     }
 
