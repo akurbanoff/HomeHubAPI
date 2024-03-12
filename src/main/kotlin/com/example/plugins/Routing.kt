@@ -21,8 +21,9 @@ fun Application.configureRouting() {
             call.respond(repository.getClients())
         }
         post("/insert_password"){
-            val request = call.receive<PasswordRequest>()
-            println(request.password)
+            val request = PasswordRequest(
+                id = call.parameters["id"]?.toInt() ?: 0,
+                password = call.parameters["password"] ?: "")
             call.respond(repository.insertPassword(request))
         }
         get("/check_password") {
