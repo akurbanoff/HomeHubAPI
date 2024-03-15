@@ -32,6 +32,9 @@ repositories {
 }
 
 dependencies {
+    implementation("org.flywaydb:flyway-core:8.0.1")
+    implementation("org.postgresql:postgresql:42.2.24")
+    implementation("com.zaxxer:HikariCP:5.0.0")
     implementation("io.github.cdimascio:dotenv-kotlin:6.4.1")
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("io.ktor:ktor-server-auth-jvm")

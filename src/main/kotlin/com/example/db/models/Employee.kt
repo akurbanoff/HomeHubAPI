@@ -38,7 +38,7 @@ object Employees: Table("employees") {
     val supervisorId = integer("supervisor_id")
     val supervisorName = varchar("supervisor_name", 40)
     val updatedAt = varchar("updated_at", 40)
-    var password = varchar("password", 40).nullable()  // захешированный
+    var password = varchar("password", 200).nullable()  // захешированный
     val description = varchar("description", 200).nullable()
 
     override val primaryKey = PrimaryKey(id)
