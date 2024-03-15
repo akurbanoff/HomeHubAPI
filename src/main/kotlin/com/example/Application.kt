@@ -19,22 +19,23 @@ fun main() {
     val dotenv = dotenv()
     val driverClassName = "org.postgresql.Driver"
 
-    val debug = false
+    val debug = true
+    var db_host = ""
+    var jdbcUrl = ""
+    var host = ""
 
-    val db_host = if(debug){
-        "localhost"
+     if(debug){
+        db_host = "172.17.0.1"
+        jdbcUrl = "jdbc:postgresql://${db_host}:${dotenv["DB_PORT"]}/${dotenv["DB_NAME"]}" //"jdbc:postgresql:${dotenv["DB_NAME"]}?port=${dotenv["DB_PORT"]}"
+        host = "0.0.0.0"
     } else {
-        //"172.17.0.1"
-        "45.130.42.144"
+        db_host = "45.130.42.144"
+         jdbcUrl = "jdbc:postgresql://${db_host}:${dotenv["DB_PORT"]}/${dotenv["DB_NAME"]}"
+        host = "45.130.42.144"
     }
 
-    val jdbcURL = if(debug)
-        "jdbc:postgresql:${dotenv["DB_NAME"]}?port=${dotenv["DB_PORT"]}"
-    else
-        "jdbc:postgresql://${db_host}:${dotenv["DB_PORT"]}/${dotenv["DB_NAME"]}"
-
     val dbConnection = Database.connect(
-        url = jdbcURL,
+        url = jdbcUrl,
         driver = driverClassName,
         password = dotenv["DB_PASS"],
         user = dotenv["DB_USER"]
@@ -47,7 +48,7 @@ fun main() {
         Netty,
         port = dotenv["SERVER_PORT"].toInt(),
         module = Application::module,
-        host = if(debug) "0.0.0.0" else "45.130.42.144"
+        host = host
     )
         .start(wait = true)
 }
