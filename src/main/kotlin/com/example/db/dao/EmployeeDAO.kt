@@ -6,7 +6,9 @@ import com.example.db.models.dto.mapToEmployeeDTO
 import com.example.parser.ApiParser
 import io.ktor.http.*
 import org.jetbrains.exposed.sql.ResultRow
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 
@@ -43,5 +45,9 @@ class EmployeeDAO {
 
     fun checkPassword(id: Int, checkPassword: String) : HttpStatusCode = transaction {
         Employees.checkPassword(id = id, checkPassword = checkPassword)
+    }
+
+    fun checkExistPassword(id: Int): Boolean = transaction{
+        !Employees.select(Employees.id eq id).empty()
     }
 }

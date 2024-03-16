@@ -19,13 +19,13 @@ fun main() {
     val dotenv = dotenv()
     val driverClassName = "org.postgresql.Driver"
 
-    val debug = true
+    val debug = false
     var db_host = ""
     var jdbcUrl = ""
     var host = ""
 
      if(debug){
-        db_host = "172.17.0.1"
+        db_host = "localhost"//"172.17.0.1"
         jdbcUrl = "jdbc:postgresql://${db_host}:${dotenv["DB_PORT"]}/${dotenv["DB_NAME"]}" //"jdbc:postgresql:${dotenv["DB_NAME"]}?port=${dotenv["DB_PORT"]}"
         host = "0.0.0.0"
     } else {

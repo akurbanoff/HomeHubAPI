@@ -5,10 +5,7 @@ import com.example.db.models.Employees
 import com.example.db.models.dto.*
 import com.example.parser.ApiParser
 import com.example.requestSerializables.PasswordRequest
-import com.example.responseSerializables.ClientResponse
-import com.example.responseSerializables.DealingResponse
-import com.example.responseSerializables.EmployeeResponse
-import com.example.responseSerializables.PasswordResponse
+import com.example.responseSerializables.*
 
 class Repository {
     val dao = EmployeeDAO()
@@ -37,5 +34,9 @@ class Repository {
 
     fun checkPassword(request: PasswordRequest): PasswordResponse{
         return PasswordResponse(dao.checkPassword(id = request.id, checkPassword = request.password).value)
+    }
+
+    fun checkExistPassword(id: Int): PasswordExistResponse{
+        return PasswordExistResponse(dao.checkExistPassword(id))
     }
 }
