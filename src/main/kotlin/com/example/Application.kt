@@ -19,7 +19,7 @@ fun main() {
     val dotenv = dotenv()
     val driverClassName = "org.postgresql.Driver"
 
-    val debug = false
+    val debug = true
     var db_host = ""
     var jdbcUrl = ""
     var host = ""
