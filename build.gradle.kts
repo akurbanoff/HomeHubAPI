@@ -32,6 +32,7 @@ repositories {
 }
 
 dependencies {
+    implementation("io.swagger.codegen.v3:swagger-codegen-generators:1.0.47")
     implementation("org.flywaydb:flyway-core:8.0.1")
     implementation("org.postgresql:postgresql:42.2.24")
     implementation("com.zaxxer:HikariCP:5.0.0")

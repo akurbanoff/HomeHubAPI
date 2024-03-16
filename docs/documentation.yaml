@@ -1,0 +1,208 @@
+openapi: 3.0.0
+info:
+  title: Homehub API
+  version: 1.0.0
+paths:
+  /get_employees:
+    get:
+      summary: Получить список сотрудников
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeResponse'
+
+  /get_dealings:
+    get:
+      summary: Получить список сделок
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DealingResponse'
+
+  /get_clients:
+    get:
+      summary: Получить список клиентов
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientResponse'
+
+  /insert_password:
+    post:
+      summary: Вставить пароль
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: password
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PasswordResponse'
+
+  /check_password:
+    get:
+      summary: Проверить совпадение пароля
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: password
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PasswordResponse'
+
+  /check_password_exist:
+    get:
+      summary: Проверить существование пароля
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PasswordExistResponse'
+
+components:
+  schemas:
+    EmployeeResponse:
+      type: object
+      properties:
+        list:
+          type: array
+          items:
+            $ref: '#/components/schemas/EmployeeSerializable'
+
+    EmployeeSerializable:
+      type: object
+      properties:
+        created_at:
+          type: string
+        department:
+          $ref: '#/components/schemas/Department'
+        email:
+          type: string
+        first_name:
+          type: string
+        id:
+          type: integer
+        is_active:
+          type: boolean
+        last_name:
+          type: string
+        last_visit_at:
+          type: string
+        local_phone:
+          type: string
+        middle_name:
+          type: string
+        office:
+          $ref: '#/components/schemas/Office'
+        phone:
+          type: string
+        photos:
+          type: array
+          items:
+            type: string
+        position:
+          type: string
+        role:
+          $ref: '#/components/schemas/Role'
+        second_phone:
+          type: string
+        show_on_site:
+          type: boolean
+        supervisor:
+          $ref: '#/components/schemas/Supervisor'
+        updated_at:
+          type: string
+
+      Office:
+        type: object
+        properties:
+          id:
+            type: integer
+          name:
+            type: string
+
+      Role:
+        type: object
+        properties:
+          id:
+            type: integer
+          name:
+            type: string
+
+      Supervisor:
+        type: object
+        properties:
+          id:
+            type: integer
+          name:
+            type: string
+
+    DealingResponse:
+      type: object
+      properties:
+        list:
+          type: array
+
+    ClientResponse:
+      type: object
+      properties:
+        list:
+          type: array
+
+    PasswordRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+        password:
+          type: string
+
+    PasswordResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+
+    PasswordExistResponse:
+      type: object
+      properties:
+        isExist:
+          type: boolean
