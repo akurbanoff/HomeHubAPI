@@ -8,7 +8,7 @@ import io.swagger.codegen.v3.generators.html.StaticHtmlCodegen
 
 fun Application.configureHTTP() {
     routing {
-        openAPI(path = "docs", swaggerFile = "docs/documentation.yaml"){
+        openAPI(path = "docs", swaggerFile = "./docs/documentation.yaml"){
             codegen = StaticHtmlCodegen()
         }
     }
