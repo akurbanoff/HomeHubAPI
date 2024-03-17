@@ -1,21 +1,24 @@
 package com.example.db.repositories
 
 import com.example.db.dao.EmployeeDAO
+import com.example.db.dao.NewsDAO
 import com.example.db.models.Employees
 import com.example.db.models.dto.*
 import com.example.parser.ApiParser
+import com.example.requestSerializables.NewsRequest
 import com.example.requestSerializables.PasswordRequest
 import com.example.responseSerializables.*
 
 class Repository {
-    val dao = EmployeeDAO()
+    val employeeDao = EmployeeDAO()
+    val newsDao = NewsDAO()
     val api = ApiParser()
 
     fun getEmployees(): EmployeeResponse{
         val newEmployees = api.getEmployees()
-        dao.addEmployees(newEmployees.list)
-        dao.checkActiveEmployees(newEmployees.list)
-        return EmployeeResponse(dao.getEmployees())
+        employeeDao.addEmployees(newEmployees.list)
+        employeeDao.checkActiveEmployees(newEmployees.list)
+        return EmployeeResponse(employeeDao.getEmployees())
     }
 
     fun getDealings(): DealingResponse{
@@ -29,14 +32,22 @@ class Repository {
     }
 
     fun insertPassword(request: PasswordRequest) : PasswordResponse{
-        return PasswordResponse(dao.insertPassword(id = request.id, password = request.password).value)
+        return PasswordResponse(employeeDao.insertPassword(id = request.id, password = request.password).value)
     }
 
     fun checkPassword(request: PasswordRequest): PasswordResponse{
-        return PasswordResponse(dao.checkPassword(id = request.id, checkPassword = request.password).value)
+        return PasswordResponse(employeeDao.checkPassword(id = request.id, checkPassword = request.password).value)
     }
 
     fun checkExistPassword(id: Int): PasswordExistResponse{
-        return PasswordExistResponse(dao.checkExistPassword(id))
+        return PasswordExistResponse(employeeDao.checkExistPassword(id))
+    }
+
+    fun getNews(): NewsResponse{
+        return NewsResponse(newsDao.getNews())
+    }
+
+    fun insertNews(newsRequest: NewsRequest): NewsInsertResponse{
+        return NewsInsertResponse(newsDao.insertNews(newsRequest))
     }
 }

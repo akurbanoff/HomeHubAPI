@@ -2,6 +2,7 @@ package com.example.plugins
 
 import com.example.db.dao.EmployeeDAO
 import com.example.db.repositories.Repository
+import com.example.requestSerializables.NewsRequest
 import com.example.requestSerializables.PasswordExistRequest
 import com.example.requestSerializables.PasswordRequest
 import io.ktor.server.application.*
@@ -37,6 +38,14 @@ fun Application.configureRouting() {
         get("/check_password_exist"){
             val request = PasswordExistRequest(call.parameters["id"]?.toInt() ?: 999)
             call.respond(repository.checkExistPassword(request.id))
+        }
+        get("/get_news"){
+            call.respond(repository.getNews())
+        }
+
+        post("/insert_news"){
+            val request = call.receive<NewsRequest>()
+            call.respond(repository.insertNews(request))
         }
     }
 }
