@@ -43,8 +43,8 @@ class Repository {
         return PasswordExistResponse(employeeDao.checkExistPassword(id))
     }
 
-    fun getNews(): NewsResponse{
-        return NewsResponse(newsDao.getNews())
+    fun getNews(skip: Int, limit: Int): NewsResponse{
+        return NewsResponse(newsDao.getNews(skip, limit))
     }
 
     fun insertNews(newsRequest: NewsRequest): NewsInsertResponse{

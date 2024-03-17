@@ -19,8 +19,8 @@ class NewsDAO {
         }
     }
 
-    fun getNews(): List<NewsSerializable> = transaction {
-        News.selectAll().toList().map {
+    fun getNews(skip: Int, limit: Int): List<NewsSerializable> = transaction {
+        News.selectAll().limit(limit, offset = skip.toLong()).toList().map {
             mapToNewsSerializable(it)
         }
     }

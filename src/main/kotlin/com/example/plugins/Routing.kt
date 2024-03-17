@@ -40,7 +40,9 @@ fun Application.configureRouting() {
             call.respond(repository.checkExistPassword(request.id))
         }
         get("/get_news"){
-            call.respond(repository.getNews())
+            val skip = call.parameters["skip"]?.toInt() ?: 0
+            val limit = call.parameters["limit"]?.toInt() ?: 5
+            call.respond(repository.getNews(skip = skip, limit = limit))
         }
 
         post("/insert_news"){
