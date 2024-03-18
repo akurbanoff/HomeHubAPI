@@ -6,10 +6,12 @@ import com.example.requestSerializables.NewsRequest
 import com.example.requestSerializables.PasswordExistRequest
 import com.example.requestSerializables.PasswordRequest
 import io.ktor.http.ContentDisposition.Companion.File
+import io.ktor.http.content.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.ktor.utils.io.core.*
 import java.io.File
 import java.util.UUID
 
@@ -49,8 +51,32 @@ fun Application.configureRouting() {
         }
 
         post("/insert_news"){
-            val request = call.receive<NewsRequest>()
-            call.respond(repository.insertNews(request))
+            val multipartData = call.receiveMultipart()
+            var title: String = ""
+            var description: String = ""
+            var images = mutableListOf<ByteArray>()
+
+            multipartData.forEachPart { part ->
+                when(part){
+                    is PartData.BinaryChannelItem -> TODO()
+                    is PartData.BinaryItem -> {
+                        images.add(part.provider().readBytes())
+                    }
+                    is PartData.FileItem -> TODO()
+                    is PartData.FormItem -> {
+                        if(part.name == "title") title = part.value
+                        if(part.name == "description") description = part.value
+                    }
+                }
+            }
+
+            call.respond(repository.insertNews(
+                NewsRequest(
+                    title = title,
+                    description = description,
+                    photos = images.toList()
+                )
+            ))
         }
 //        post("/upload_news_photos") {
 //            val imageName = call.parameters["name"] ?: UUID.randomUUID().toString()
