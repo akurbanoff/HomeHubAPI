@@ -13,5 +13,5 @@ data class NewsSerializable(
     val title: String,
     val createdAt: String,
     val description: String,
-    val photos: List<String>
+    val photos: List<ByteArray>
 )

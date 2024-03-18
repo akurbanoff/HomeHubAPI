@@ -5,10 +5,13 @@ import com.example.db.repositories.Repository
 import com.example.requestSerializables.NewsRequest
 import com.example.requestSerializables.PasswordExistRequest
 import com.example.requestSerializables.PasswordRequest
+import io.ktor.http.ContentDisposition.Companion.File
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import java.io.File
+import java.util.UUID
 
 fun Application.configureRouting() {
     val repository = Repository()
@@ -49,5 +52,9 @@ fun Application.configureRouting() {
             val request = call.receive<NewsRequest>()
             call.respond(repository.insertNews(request))
         }
+//        post("/upload_news_photos") {
+//            val imageName = call.parameters["name"] ?: UUID.randomUUID().toString()
+//            val image: ByteArray =
+//        }
     }
 }

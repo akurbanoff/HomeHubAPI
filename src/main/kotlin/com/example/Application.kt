@@ -31,7 +31,7 @@ fun main() {
     } else {
         db_host = "45.130.42.144"
          jdbcUrl = "jdbc:postgresql://${db_host}:${dotenv["DB_PORT"]}/${dotenv["DB_NAME"]}"
-        host = "45.130.42.144"
+        host = "0.0.0.0"//"45.130.42.144"
     }
 
     val dbConnection = Database.connect(
@@ -41,6 +41,7 @@ fun main() {
         user = dotenv["DB_USER"]
     )
     dbConnection.transactionManager.newTransaction().exec("ALTER TABLE employees ALTER COLUMN password TYPE VARCHAR(200);")
+    dbConnection.transactionManager.newTransaction().exec("ALTER TABLE news ALTER COLUMN photos TYPE bytea[] USING photos::bytea[];")
     transaction(dbConnection) {
         SchemaUtils.create(Clients, Achieves, Employees,
             Objects, Dealings, Company, ClientDescriptions,

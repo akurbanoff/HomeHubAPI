@@ -14,7 +14,7 @@ object News: Table("news"){
     val title = varchar("title", 200)
     val createdAt = varchar("created_at", 50)
     val description = largeText("description")
-    val photos = array<String>("photos")
+    val photos = array<ByteArray>("photos")
 
     override val primaryKey: PrimaryKey = PrimaryKey(id)
 
