@@ -58,16 +58,16 @@ fun Application.configureRouting() {
 
             multipartData.forEachPart { part ->
                 when(part){
-                    is PartData.BinaryChannelItem -> TODO()
                     is PartData.BinaryItem -> {
                         images.add(part.provider().readBytes())
                     }
-                    is PartData.FileItem -> TODO()
                     is PartData.FormItem -> {
                         if(part.name == "title") title = part.value
                         if(part.name == "description") description = part.value
                     }
+                    else -> {}
                 }
+                part.dispose()
             }
 
             call.respond(repository.insertNews(
