@@ -11,6 +11,7 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.ktor.util.cio.*
 import io.ktor.utils.io.core.*
 import java.io.File
 import java.util.UUID
@@ -64,6 +65,9 @@ fun Application.configureRouting() {
                     is PartData.FormItem -> {
                         if(part.name == "title") title = part.value
                         if(part.name == "description") description = part.value
+                    }
+                    is PartData.BinaryChannelItem -> {
+                        images.add(part.provider().toByteArray())
                     }
                     else -> {}
                 }
