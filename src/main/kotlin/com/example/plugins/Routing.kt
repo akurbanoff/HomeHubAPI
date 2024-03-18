@@ -69,10 +69,14 @@ fun Application.configureRouting() {
                     is PartData.BinaryChannelItem -> {
                         images.add(part.provider().toByteArray())
                     }
-                    else -> {}
+                    is PartData.FileItem -> {
+                        images.add(part.provider().readBytes())
+                    }
                 }
                 part.dispose()
             }
+
+            println(images.toString())
 
             call.respond(repository.insertNews(
                 NewsRequest(
