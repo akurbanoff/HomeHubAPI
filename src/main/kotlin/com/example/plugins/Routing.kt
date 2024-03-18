@@ -70,7 +70,7 @@ fun Application.configureRouting() {
                         images.add(part.provider().toByteArray())
                     }
                     is PartData.FileItem -> {
-                        images.add(part.provider().readBytes())
+                        images.add(part.streamProvider().readBytes())
                     }
                 }
                 part.dispose()
