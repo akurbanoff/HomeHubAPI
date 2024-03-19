@@ -40,14 +40,14 @@ fun main() {
         password = dotenv["DB_PASS"],
         user = dotenv["DB_USER"]
     )
-    dbConnection.transactionManager.newTransaction().exec("ALTER TABLE employees ALTER COLUMN password TYPE VARCHAR(200);")
-    dbConnection.transactionManager.newTransaction().exec("ALTER TABLE news ALTER COLUMN photos TYPE bytea[] USING photos::bytea[];")
     transaction(dbConnection) {
         SchemaUtils.create(Clients, Achieves, Employees,
             Objects, Dealings, Company, ClientDescriptions,
             News
         )
     }
+    dbConnection.transactionManager.newTransaction().exec("ALTER TABLE employees ALTER COLUMN password TYPE VARCHAR(200);")
+    dbConnection.transactionManager.newTransaction().exec("ALTER TABLE news ALTER COLUMN photos TYPE text[];")
     embeddedServer(
         Netty,
         port = dotenv["SERVER_PORT"].toInt(),

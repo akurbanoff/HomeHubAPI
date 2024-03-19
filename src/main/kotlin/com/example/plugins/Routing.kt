@@ -14,7 +14,7 @@ import io.ktor.server.routing.*
 import io.ktor.util.cio.*
 import io.ktor.utils.io.core.*
 import java.io.File
-import java.util.UUID
+import java.util.*
 
 fun Application.configureRouting() {
     val repository = Repository()
@@ -55,22 +55,31 @@ fun Application.configureRouting() {
             val multipartData = call.receiveMultipart()
             var title: String = ""
             var description: String = ""
-            var images = mutableListOf<ByteArray>()
+            var images = mutableListOf<String>()
 
             multipartData.forEachPart { part ->
                 when(part){
                     is PartData.BinaryItem -> {
-                        images.add(part.provider().readBytes())
+                        val bytes = part.provider().readBytes()
+                        val file = File("/photos/${Random().nextInt()}.jpeg")
+                        if(!file.exists()) file.createNewFile()
+                        file.writeBytes(bytes)
+                        images.add(file.name)
                     }
                     is PartData.FormItem -> {
                         if(part.name == "title") title = part.value
                         if(part.name == "description") description = part.value
                     }
                     is PartData.BinaryChannelItem -> {
-                        images.add(part.provider().toByteArray())
+                        //images.add(part.provider().toByteArray())
                     }
                     is PartData.FileItem -> {
-                        images.add(part.streamProvider().readBytes())
+                        val bytes = part.streamProvider().readBytes()
+                        val file = File("/photos/${Random().nextInt()}.jpeg")
+                        if(!file.exists()) file.createNewFile()
+                        file.writeBytes(bytes)
+                        println(file.name)
+                        images.add(file.name)
                     }
                 }
                 part.dispose()

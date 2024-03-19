@@ -7,5 +7,5 @@ import java.io.File
 data class NewsRequest(
     val title: String,
     val description: String,
-    val photos: List<ByteArray>
+    val photos: List<String>
 )

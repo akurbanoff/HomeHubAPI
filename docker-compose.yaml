@@ -16,6 +16,8 @@ services:
     restart: always
     working_dir: /app
     network_mode: bridge
+    volumes:
+      - ./photos:/photos
 
   db:
     image: postgres:latest

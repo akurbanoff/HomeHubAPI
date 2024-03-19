@@ -9,4 +9,5 @@ RUN mkdir /app
 WORKDIR /app
 COPY build/libs/*.jar /app.jar
 COPY .env .
+RUN mkdir /photos
 ENTRYPOINT ["java","-jar","/app.jar"]
