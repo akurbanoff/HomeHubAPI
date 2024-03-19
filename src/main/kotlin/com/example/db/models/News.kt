@@ -48,7 +48,7 @@ fun mapToNewsSerializable(result: ResultRow) : NewsSerializable{
         for (photo in result[News.photos]) {
             //println(result[News.title])
             //println(photo)
-            val file = File("photos/$photo")
+            val file = File("/photos/$photo")
             photoList.add(file.readBytes())
         }
     }

@@ -45,9 +45,10 @@ fun main() {
             Objects, Dealings, Company, ClientDescriptions,
             News
         )
+        exec("ALTER TABLE employees ALTER COLUMN password TYPE VARCHAR(200);")
+        exec("ALTER TABLE news ALTER COLUMN photos TYPE text[];")
     }
-    dbConnection.transactionManager.newTransaction().exec("ALTER TABLE employees ALTER COLUMN password TYPE VARCHAR(200);")
-    dbConnection.transactionManager.newTransaction().exec("ALTER TABLE news ALTER COLUMN photos TYPE text[];")
+
     embeddedServer(
         Netty,
         port = dotenv["SERVER_PORT"].toInt(),
